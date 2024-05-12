@@ -10,7 +10,7 @@ const app=express()
 
 app.disable("x-powered-by")
 
-const port=process.env.PORT ?? 1234;
+
 
 app.use(express.json());
 
@@ -62,12 +62,10 @@ app.patch('/movies/:id', (req, res) => {
     movies[movieIndex] = updateMovie
     return res.json(updateMovie)
 })
-
-
 app.use((req,res)=>{
     res.send("404");
 })
-
+const port=process.env.PORT ?? 1234;
 app.listen(port,()=>{
     console.log(pc.bgGreen(`Servidor abierto en puerto: http://localhost:${port}`));
 })
