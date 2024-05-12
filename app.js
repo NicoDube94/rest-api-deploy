@@ -1,18 +1,19 @@
-const express=require("express")
-const pc=require("picocolors")
-const crypto=require("node:crypto")
+import express, { json } from "express"
+import pkg from "picocolors"
+import { randomUUID } from "node:crypto"
 
 
-const movies=require('./movies.json')
-const { validarPelicula, validacionparcial } = require("./schemas/movies")
-const { error } = require("node:console")
+import movies from './movies.json' with {type: 'json'}
+import { validarPelicula, validacionparcial } from "./schemas/movies.js"
+import { error } from "node:console"
+import assert from "node:assert"
 const app=express()
 
 app.disable("x-powered-by")
 
 
 
-app.use(express.json());
+app.use(json());
 
 app.get('/movies',(req,res)=>{
     res.header('Access-Control-Allow-Origin','*')
@@ -39,7 +40,7 @@ app.post('/movies',(req,res)=>{
         return res.status(400).json({error:JSON.parse(result.error.message)})
     }
     const newMovie={
-        id: crypto.randomUUID(),
+        id: randomUUID(),
         ...result.data
     }
     movies.push(newMovie)
@@ -67,6 +68,6 @@ app.use((req,res)=>{
 })
 const port=process.env.PORT ?? 1234;
 app.listen(port,()=>{
-    console.log(pc.bgGreen(`Servidor abierto en puerto: http://localhost:${port}`));
+    console.log(pkg.bgGreen(`Servidor abierto en puerto: http://localhost:${port}`));
 })
 

@@ -1,4 +1,4 @@
-const z=require("zod")
+import z from 'zod'
 
 const movieEsc =z.object({
     title: z.string({
@@ -17,14 +17,11 @@ const movieEsc =z.object({
     )
 })
 
-function validarPelicula(object){
+export function validarPelicula(object){
     return movieEsc.safeParse(object);
 }
 
-function validacionparcial(object){
+export function validacionparcial(object){
     return movieEsc.partial().safeParse(object);
 }
-module.exports={
-    validarPelicula,
-    validacionparcial
-}
+
